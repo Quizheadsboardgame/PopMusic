@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Music Quiz</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Baloo 2', sans-serif;
+            background-color: #38B6FF; /* Background color */
+            color: black;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        #yellow-box {
+            width: 200px;
+            height: 200px;
+            background-color: #FED405; /* Yellow color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+            border: 5px solid black; /* Black edging */
+            transition: transform 0.1s ease-in-out;
+        }
+
+        #question-answer {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Keyframes for the bounce animation */
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Class to trigger the bounce animation */
+        .animate-bounce {
+            animation: bounce 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="yellow-box">POP MUSIC</div>
+
+    <div id="question-answer"></div>
+
+    <script>
+        const yellowBox = document.getElementById("yellow-box");
+        const questionAnswerDiv = document.getElementById("question-answer");
+
+        // Array of questions and answers about Pop Music
+        const popMusicQuestions = [
+            { question: "Which 2014 song by Taylor Swift marked her transition from country to pop music?", answer: "Shake It Off" },
+            { question: "What 2011 song by Adele became a massive hit and won the Grammy for Record of the Year?", answer: "Rolling in the Deep" },
+            { question: "Which 2018 song by Dua Lipa topped the charts with its catchy chorus?", answer: "New Rules" },
+            { question: "What 2017 song by Ed Sheeran spent 16 consecutive weeks at number one on the Billboard Hot 100?", answer: "Shape of You" },
+            { question: "Which 2016 song by Justin Bieber features the line 'Is it too late now to say sorry'?", answer: "Sorry" },
+            { question: "What 2019 song by Billie Eilish features the lyrics 'I had a dream, I got everything I wanted'?", answer: "Everything I Wanted" },
+            { question: "Which 2008 song by Lady Gaga was known for its iconic music video featuring a futuristic theme?", answer: "Paparazzi" },
+            { question: "What 2015 song by Mark Ronson featuring Bruno Mars won Record of the Year at the Grammys?", answer: "Uptown Funk" },
+            { question: "Which 2013 song by Katy Perry includes the lyrics 'Baby, you’re a firework'?", answer: "Firework" },
+            { question: "What 2020 song by The Weeknd became widely popular and has the lyrics 'I said, ooh, I’m blinded by the lights'?", answer: "Blinding Lights" },
+            { question: "Which 2011 song by Rihanna features the line 'We found love in a hopeless place'?", answer: "We Found Love" },
+            { question: "What 2019 song by Lil Nas X became a viral hit and topped the Billboard Hot 100 for 19 weeks?", answer: "Old Town Road" },
+            { question: "Which 2016 song by Sia was used as the theme song for the movie 'My Little Pony: The Movie'?", answer: "Cheap Thrills" },
+            { question: "What 2014 song by Sam Smith won the Grammy for Song of the Year?", answer: "Stay With Me" },
+            { question: "Which 2010 song by Kesha is known for its party anthem vibe and includes the lyrics 'We are who we are'?", answer: "Tik Tok" },
+            { question: "What 2018 song by Ariana Grande features the lyrics 'I’m so into you, I can barely breathe'?", answer: "No Tears Left to Cry" },
+            { question: "Which 2021 song by Olivia Rodrigo includes the lyrics 'You said forever, but now I drive alone past your street'?", answer: "drivers license" },
+            { question: "What 2009 song by Black Eyed Peas was known for its futuristic beat and chorus?", answer: "I Gotta Feeling" },
+            { question: "Which 2012 song by Carly Rae Jepsen became a global hit with the chorus 'Hey, I just met you'?", answer: "Call Me Maybe" },
+            { question: "What 2017 song by Harry Styles was a debut solo single after leaving One Direction?", answer: "Sign of the Times" },
+            { question: "Which 2020 song by BTS topped the Billboard Hot 100 and features a catchy chorus?", answer: "Dynamite" },
+            { question: "What 2018 song by Post Malone became a hit with the line 'I fall apart'?", answer: "I Fall Apart" },
+            { question: "Which 2011 song by Lady Gaga was known for its provocative music video and lyrics?", answer: "Born This Way" },
+            { question: "What 2020 song by Cardi B features the lyrics 'I don’t cook, I don’t clean'?", answer: "WAP" },
+            { question: "Which 2016 song by Fifth Harmony includes the lyrics 'I’m worth it'?", answer: "Worth It" },
+            { question: "What 2017 song by Luis Fonsi and Daddy Yankee became a global hit with its catchy reggaeton beat?", answer: "Despacito" },
+            { question: "Which 2019 song by Shawn Mendes features the lyrics 'I know I can’t keep it to myself'?", answer: "If I Can’t Have You" },
+            { question: "What 2021 song by Doja Cat features the line 'I’m a savage, classy, bougie, ratchet'?", answer: "Say So" },
+            { question: "Which 2015 song by Taylor Swift features the lyrics 'Cause the players gonna play, play, play'?", answer: "Shake It Off" },
+            { question: "What 2013 song by Miley Cyrus includes the line 'I came in like a wrecking ball'?", answer: "Wrecking Ball" },
+            { question: "Which 2020 song by The Weeknd has the lyrics 'I’m blinded by the lights'?", answer: "Blinding Lights" },
+            { question: "What 2021 song by Silk Sonic features Bruno Mars and Anderson .Paak and is known for its smooth vibe?", answer: "Leave the Door Open" },
+            { question: "Which 2007 song by Rihanna became a hit with its infectious chorus and danceable beat?", answer: "Umbrella" },
+            { question: "What 2019 song by Jonas Brothers made a comeback and was popular for its catchy chorus?", answer: "Sucker" },
+            { question: "Which 2018 song by Ariana Grande was known for its upbeat tempo and positive lyrics?", answer: "No Tears Left to Cry" },
+            { question: "What 2008 song by Lady Gaga features the lyrics 'Can’t read my, can’t read my, no he can’t read my poker face'?", answer: "Poker Face" },
+            { question: "Which 2011 song by Adele includes the lyrics 'Never mind, I’ll find someone like you'?", answer: "Someone Like You" },
+            { question: "What 2021 song by Ed Sheeran features the lyrics 'I’m in love with the shape of you'?", answer: "Shape of You" },
+            { question: "Which 2004 song by Usher became a hit with its catchy beat and lyrics?", answer: "Yeah!" },
+            { question: "What 2016 song by Zayn Malik was a major solo debut with the lyrics 'Pillowtalk'?", answer: "Pillowtalk" },
+            { question: "Which 2013 song by Katy Perry features the lyrics 'Do you ever feel like a plastic bag'?", answer: "Firework" },
+            { question: "What 2019 song by Billie Eilish features the lyrics 'I’m the bad guy'?", answer: "bad guy" },
+            { question: "Which 2017 song by Ed Sheeran includes the lyrics 'I’m in love with the shape of you'?", answer: "Shape of You" },
+            { question: "What 2020 song by Harry Styles includes the lyrics 'Watermelon sugar high'?", answer: "Watermelon Sugar" },
+            { question: "Which 2002 song by Nelly features the lyrics 'Hot in Herre'?", answer: "Hot in Herre" },
+            { question: "What 2021 song by Lil Nas X features the lyrics 'I’m gonna take my horse to the old town road'?", answer: "Old Town Road" }
+        ];
+
+        let shuffledQuestions = [];
+        let questionIndex = 0;
+
+        // Shuffle the questions array
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        // Initialize questions
+        function initializeQuestions() {
+            shuffledQuestions = shuffleArray([...popMusicQuestions]);
+            questionIndex = 0;
+            displayQuestion();
+        }
+
+        // Function to display the current question
+        function displayQuestion() {
+            if (shuffledQuestions.length === 0) {
+                questionAnswerDiv.innerHTML = "<strong>No more questions!</strong>";
+                return;
+            }
+            const currentQA = shuffledQuestions[questionIndex];
+            questionAnswerDiv.innerHTML = `<strong>Question:</strong> ${currentQA.question}<br><strong>Answer:</strong> ${currentQA.answer}`;
+        }
+
+        // Bounce animation on click
+        yellowBox.addEventListener("click", () => {
+            yellowBox.classList.add("animate-bounce");
+            setTimeout(() => {
+                yellowBox.classList.remove("animate-bounce");
+            }, 300);
+            questionIndex = (questionIndex + 1) % shuffledQuestions.length;
+            displayQuestion();
+        });
+
+        // Initialize the quiz
+        initializeQuestions();
+    </script>
+
+</body>
+</html>
